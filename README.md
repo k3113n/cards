@@ -1,2 +1,1 @@
-# cards
-Card creator and viewer
+# Cards
