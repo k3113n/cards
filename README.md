@@ -1,1 +1,1 @@
-# Cards of the Day
+# Cards
