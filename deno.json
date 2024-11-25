@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "start": "deno run --allow-read --allow-env --allow-net --allow-ffi main.tsx"
+        "start": "deno run --allow-read --allow-env --allow-net --allow-ffi --allow-sys main.tsx"
     },
     "imports": {
         "server": "https://deno.land/std@0.203.0/http/server.ts",
