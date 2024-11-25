@@ -5,13 +5,11 @@ import satori, { init } from "satori";
 import initYoga from "yoga";
 import { Resvg } from "resvg";
 import cacheDir from "cache";
-import { load } from "dotenv";
 import Card from "./card.tsx";
 
-const env = await load();
-const secret = new TextEncoder().encode(env.JWT_SECRET);
-const issuer = env.ISSUER;
-const alg = env.ALG;
+const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET"));
+const issuer = Deno.env.get("JWT_ISSUER");
+const alg = Deno.env.get("JWT_ALG");
 
 console.log(await new SignJWT({ iss: issuer })
   .setProtectedHeader({ alg: alg })
