@@ -10,6 +10,7 @@ import Card from "./card.tsx";
 const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET"));
 const issuer = Deno.env.get("JWT_ISSUER");
 const alg = Deno.env.get("JWT_ALG");
+const port = Deno.env.get("PORT");
 
 console.log(await new SignJWT({ iss: issuer })
   .setProtectedHeader({ alg: alg })
@@ -127,4 +128,4 @@ serve(async (req) => {
   } catch (err) {
     return new Response("Invalid Token", {status: 401})
   }
-});
+}, {port: port});
