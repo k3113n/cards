@@ -34,7 +34,7 @@ serve(async (req) => {
     if (req.method === "POST") {
       try {
         const json = await req.json();
-        console.log(json.moves[0][2]);
+        console.log(json.moves[1][2]);
         const title = json.title;
         const subtitle = json.subtitle;
         const bg = json.bg;
