@@ -221,6 +221,7 @@ export default function Card({
         <span style={{
                margin: "10px",
                fontSize: "18px",
+               overflow: "hidden"
            }}>
           {biography}
         </span>
@@ -406,6 +407,7 @@ function Move({
              justifyContent: "space-around",
              alignItems: "center",
              flexWrap: "wrap",
+             gap: "5px",
            }}>
         {chars.map((char, index) => (
           <Jewel size={40} character={char} color={colors[index]} />
