@@ -73,7 +73,8 @@ export default function Card({
        display: "flex",
        justifyContent: "center",
        alignItems: "center",
-       position: "relative"
+       position: "relative",
+       fontFamily: "'NotoSans', 'NotoEmoji'",
       }}>
       <Gradient color={bgColor} />
       <p style={{
