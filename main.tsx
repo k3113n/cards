@@ -99,8 +99,8 @@ serve(async (req) => {
             height: 1050,
             fonts: [
               {
-                name: "Inter",
-                data: await Deno.readFile("./inter.ttf"),
+                name: "Noto Sans",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSans-Regular.ttf"),
                 weight: 400,
                 style: "normal",
               },
