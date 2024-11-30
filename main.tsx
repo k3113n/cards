@@ -34,6 +34,7 @@ serve(async (req) => {
     if (req.method === "POST") {
       try {
         const json = await req.json();
+        console.log(json.moves[0][2]);
         const title = json.title;
         const subtitle = json.subtitle;
         const bg = json.bg;
@@ -43,14 +44,14 @@ serve(async (req) => {
         const left = json.details[0];
         const center = json.details[1];
         const right = json.details[2];
-        const jewelChar1 = json.moves[1][0];
-        const jewelColor1 = json.moves[1][1];
-        const data1 = json.moves[1][2];
-        const count1 = json.moves[1][3];
-        const jewelChar2 = json.moves[0][0];
-        const jewelColor2 = json.moves[0][1];
-        const data2 = json.moves[0][2];
-        const count2 = json.moves[0][3];
+        const jewelChar1 = json.moves[0][0];
+        const jewelColor1 = json.moves[0][1];
+        const data1 = json.moves[0][2];
+        const count1 = json.moves[0][3];
+        const jewelChar2 = json.moves[1][0];
+        const jewelColor2 = json.moves[1][1];
+        const data2 = json.moves[1][2];
+        const count2 = json.moves[1][3];
         const startTitle = json.stats[0][0];
         const startCount = json.stats[0][1];
         const middleTitle = json.stats[1][0];
