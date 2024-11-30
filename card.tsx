@@ -221,6 +221,11 @@ export default function Card({
         <span style={{
                margin: "10px",
                fontSize: "18px",
+               display: "-webkit-box",
+               WebkitBoxOrient: "vertical",
+               overflow: "hidden",
+               textOverflow: "ellipsis",
+               WebkitLineClamp: 2,
            }}>
           {biography}
         </span>
