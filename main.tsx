@@ -104,6 +104,12 @@ serve(async (req) => {
                 weight: 400,
                 style: "normal",
               },
+              {
+                name: "NotoEmoji",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoEmoji-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
             ]
           });
 
