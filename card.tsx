@@ -61,7 +61,7 @@ export default function Card({
   cardNumber: string;
   cardCount: string;
 }){
-  const statCount = (data1.length > 0 ? 1 : 0) + (data2.length > 0 ? 1 : 0);
+  const statCount = (data1[0] !== "" ? 1 : 0) + (data2[0] !== "" ? 1 : 0);
   return (
     <div style={{
        width: "750px",
@@ -139,8 +139,8 @@ export default function Card({
              justifyContent: "center",
              alignItems: "center",
          }}>
-          {data1.length > 0 && <Move height={statCount > 1 ? "50%" : "100%"} chars={jewelChar1} colors={jewelColor1} title={data1[0]} data={data1.slice(1)} count={count1} />}
-          {data2.length > 0 && <Move height={statCount > 1 ? "50%" : "100%"}  chars={jewelChar2} colors={jewelColor2} title={data2[0]} data={data2.slice(1)} count={count2} />}
+          {data1[0] !== "" && <Move height={statCount > 1 ? "50%" : "100%"} chars={jewelChar1} colors={jewelColor1} title={data1[0]} data={data1.slice(1)} count={count1} />}
+          {data2[0] !== "" && <Move height={statCount > 1 ? "50%" : "100%"}  chars={jewelChar2} colors={jewelColor2} title={data2[0]} data={data2.slice(1)} count={count2} />}
       </div>
       <div style={{
                position: "absolute",
