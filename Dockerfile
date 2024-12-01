@@ -2,7 +2,8 @@ FROM denoland/deno:alpine
 WORKDIR /app
 COPY . .
 EXPOSE 8080
-RUN apk add --no-cache wget fontconfig font-noto-all font-noto-emoji
+RUN apk add --no-cache wget fontconfig font-noto-all font-noto-cjk font-noto-emoji
+RUN deno run --allow-read --allow-write fonts.tsx
 RUN fc-cache -fv
 RUN mkdir -p /root/.cache/deno/npm/registry.npmjs.org/yoga-wasm-web/0.2.0/dist/ && \
     wget -O /root/.cache/deno/npm/registry.npmjs.org/yoga-wasm-web/0.2.0/dist/yoga.wasm \
