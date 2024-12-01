@@ -136,7 +136,7 @@ serve(async (req) => {
               },
               {
                 name: "NotoSansKR",
-                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansKR.ttf"),
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansCJKKR.ttf"),
                 weight: 400,
                 style: "normal",
               },
