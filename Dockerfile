@@ -6,6 +6,7 @@ RUN apk add --no-cache \
 wget \
 font-noto
 RUN fc-cache -fv
+RUN ls /usr/share/fonts/noto/
 RUN mkdir -p /root/.cache/deno/npm/registry.npmjs.org/yoga-wasm-web/0.2.0/dist/ && \
     wget -O /root/.cache/deno/npm/registry.npmjs.org/yoga-wasm-web/0.2.0/dist/yoga.wasm \
     https://cdn.jsdelivr.net/npm/yoga-wasm-web@0.2.0/dist/yoga.wasm
