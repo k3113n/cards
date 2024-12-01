@@ -6,12 +6,12 @@ const outputDir = "/usr/share/fonts/noto/";
 const collection = fontkit.openSync(ttcPath);
 collection.fonts.forEach(async (font) => {
   const fontName = font.fullName.replace(/\s+/g, "");
-  const outputPath = join(outputDir, `${fontName}.ttf`);
+  const outputPath = join(outputDir, `${fontName}.otf`);
   try {
     const fontData = new Uint8Array(font.stream.buffer);
     await writeFile(outputPath, fontData);
     console.log(`Saved: ${outputPath}`);
   } catch (error) {
-    console.error(`Error writing ${fontName}.ttf:`, error);
+    console.error(`Error writing ${fontName}.otf:`, error);
   }
 });
