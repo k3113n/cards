@@ -74,7 +74,7 @@ export default function Card({
        justifyContent: "center",
        alignItems: "center",
        position: "relative",
-       fontFamily: "'NotoSans', 'NotoEmoji'",
+       fontFamily: "'NotoSans'",
       }}>
       <Gradient color={bgColor} />
       <p style={{
