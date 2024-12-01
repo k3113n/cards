@@ -99,8 +99,62 @@ serve(async (req) => {
             height: 1050,
             fonts: [
               {
-                name: "Noto Sans",
+                name: "NotoSans",
                 data: await Deno.readFile("/usr/share/fonts/noto/NotoSans-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoEmoji",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoColorEmoji.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansArabic",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansArabic-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansSC",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansSC-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansTC",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansTC-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansJP",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansJP-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansKR",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansKR-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansDevanagari",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansDevanagari-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansThai",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansThai-Regular.ttf"),
+                weight: 400,
+                style: "normal",
+              },
+              {
+                name: "NotoSansHebrew",
+                data: await Deno.readFile("/usr/share/fonts/noto/NotoSansHebrew-Regular.ttf"),
                 weight: 400,
                 style: "normal",
               },

@@ -74,7 +74,7 @@ export default function Card({
        justifyContent: "center",
        alignItems: "center",
        position: "relative",
-       fontFamily: "'NotoSans'",
+       fontFamily: "'NotoSans', 'NotoEmoji', 'NotoSansArabic', 'NotoSansSC', 'NotoSansTC', 'NotoSansJP', 'NotoSansKR', 'NotoSansHebrew', 'NotoSansThai', 'NotoSansDevanagari', sans-serif",
       }}>
       <Gradient color={bgColor} />
       <p style={{
@@ -368,6 +368,7 @@ function Details({
       {items.map((item, index) => (
         <span style={{
                  margin: "5px",
+                 overflow: "hidden"
               }}>
           {item}
         </span>
@@ -428,6 +429,7 @@ function Move({
                flexDirection: "column",
                justifyContent: "center",
                alignItems: "flex-start",
+               maxHeight: "50%",
                overflow: "hidden"
            }}>
           <span style={{
