@@ -74,13 +74,13 @@ export default function Card({
        justifyContent: "center",
        alignItems: "center",
        position: "relative",
-       fontFamily: "'NotoSans', sans-serif",
+       fontFamily: "'Noto Sans', 'Noto Color Emoji', sans-serif",
       }}>
         <Gradient color={brightenColor(bgColor)} />
       <p style={{
            position: "absolute",
            left: "45px",
-           top: "-2px",
+           top: "-4px",
            fontSize: "20px",
            textAlign: "left",
        }}>
@@ -89,7 +89,7 @@ export default function Card({
       <p style={{
          position: "absolute",
          left: "45px",
-         top: "-2px",
+         top: "-4px",
          fontSize: "40px",
          textAlign: "left",
        }}>
@@ -104,9 +104,9 @@ export default function Card({
           <Jewel size={40} character={typeChar} color={typeColor} />
       </div>
       <div style={{
-         top: "86px",
-         width: "595px",
-         height: "429px",
+         top: "90px",
+         width: "575px",
+         height: "409px",
          padding: "13px",
          background: `linear-gradient(
                   to bottom right,
@@ -348,7 +348,7 @@ function Details({
              position: "absolute",
              width: "540px",
              height: "30px",
-             top: "525.88px",
+             top: "530.88px",
              background: `linear-gradient(
                   to bottom right,
                   #FFD700,

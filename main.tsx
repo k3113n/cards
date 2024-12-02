@@ -1,14 +1,16 @@
 import { serve } from "server";
 import React from "react";
 import ReactDOMServer from "reactdom";
-import puppeteer from "puppeteer";
+import { chromium } from "playwright";
 import { SignJWT, jwtVerify } from "jose";
+import { load } from "dotenv";
 import Card from "./card.tsx";
 
-const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET"));
-const issuer = Deno.env.get("JWT_ISSUER");
-const alg = Deno.env.get("JWT_ALG");
-const port = Deno.env.get("PORT");
+const env = await load();
+const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET") || env["JWT_SECRET"]);
+const issuer = Deno.env.get("JWT_ISSUER") || env["JWT_ISSUER"];
+const alg = Deno.env.get("JWT_ALG") || env["JWT_ALG"];
+const port = Deno.env.get("PORT") || env["PORT"];
 
 console.log(await new SignJWT({ iss: issuer })
   .setProtectedHeader({ alg: alg })
@@ -25,8 +27,13 @@ serve(async (req) => {
     const { payload } = await jwtVerify(token, secret);
     if (req.method === "POST") {
       try {
-        const browser = await puppeteer.launch({ pipe: false, headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"],});
-        const page = await browser.newPage();
+        const browser = await chromium.launch();
+        const context = await browser.newContext({
+          viewport: { width: 750, height: 1050 },
+          deviceScaleFactor: 1,
+          isMobile: false,
+        });
+        const page = await context.newPage();
         const json = await req.json();
         const title = json.title;
         const subtitle = json.subtitle;
@@ -90,7 +97,7 @@ serve(async (req) => {
             cardCount={cardCount}
           />
           );
-        const htmlContent = `
+        await page.setContent(`
             <!DOCTYPE html>
             <html lang="en">
               <head>
@@ -103,10 +110,8 @@ serve(async (req) => {
               </head>
               <body>${card}</body>
             </html>
-        `
-        await page.setViewport({ width: 750, height: 1050 });
-        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-        const pngBuffer = await page.screenshot({ type: "png" });
+        `);
+        const pngBuffer = await page.screenshot({ type: "png", omitBackground: true, });
         await browser.close();
 
         return new Response(pngBuffer, {
