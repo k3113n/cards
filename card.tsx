@@ -409,7 +409,7 @@ function Move({
              justifyContent: "space-around",
              alignItems: "center",
              flexWrap: "wrap",
-             gap: "5px",
+             gap: "10px",
            }}>
         {chars.map((char, index) => (
           <Jewel size={40} character={char} color={colors[index]} />
@@ -429,6 +429,7 @@ function Move({
                flexDirection: "column",
                justifyContent: "center",
                alignItems: "flex-start",
+               flexWrap: "wrap",
            }}>
           <span style={{
               fontSize: "22px",
