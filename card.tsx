@@ -92,6 +92,7 @@ export default function Card({
          top: "-4px",
          fontSize: "40px",
          textAlign: "left",
+         fontWeight: "bold"
        }}>
       {title}
       </p>
@@ -140,8 +141,8 @@ export default function Card({
              justifyContent: "center",
              alignItems: "center",
          }}>
-          {data1[0] !== "" && <Move height={statCount > 1 ? "50%" : "100%"} chars={jewelChar1} colors={jewelColor1} title={data1[0]} data={data1.slice(1)} count={count1} />}
-          {data2[0] !== "" && <Move height={statCount > 1 ? "50%" : "100%"}  chars={jewelChar2} colors={jewelColor2} title={data2[0]} data={data2.slice(1)} count={count2} />}
+          {data1[0] !== "" && <Move split={statCount > 1} chars={jewelChar1} colors={jewelColor1} title={data1[0]} data={data1.slice(1)} count={count1} />}
+          {data2[0] !== "" && <Move split={statCount > 1}  chars={jewelChar2} colors={jewelColor2} title={data2[0]} data={data2.slice(1)} count={count2} />}
       </div>
       <div style={{
                position: "absolute",
@@ -222,7 +223,13 @@ export default function Card({
         <span style={{
                margin: "10px",
                fontSize: "18px",
-               overflow: "hidden"
+               display: '-webkit-box',
+               WebkitBoxOrient: 'vertical',
+               WebkitLineClamp: 2,
+               overflow: 'hidden',
+               textOverflow: 'ellipsis',
+               whiteSpace: 'normal',
+               wordBreak: 'break-all',
            }}>
           {biography}
         </span>
@@ -382,18 +389,18 @@ function Move({
   title,
   data,
   count,
-  height
+  split
 }:{
   chars: string[];
   colors: string[];
   title: string;
   data: string[];
   count: string;
-  height: string;
+  split: bool;
 }){
   return (
     <div style={{
-             height: height,
+             height: split ? "50%" : "100%",
              width: "100%",
              borderBottom: "4px solid black",
              boxSizing: "border-box",
@@ -423,29 +430,32 @@ function Move({
                width: "418.7px",
                marginLeft: "15px",
                marginRight: "15px",
-               fontSize: "18px",
                display: "flex",
                flexDirection: "column",
                justifyContent: "center",
                alignItems: "flex-start",
                flexWrap: "wrap",
            }}>
-          <span style={{
-              fontSize: "22px",
-            }}>
-            {title}
-          </span>
           <div style={{
                    display: '-webkit-box',
                    WebkitBoxOrient: 'vertical',
-                   WebkitLineClamp: 5,
+                   WebkitLineClamp: split ? 5 : 10,
                    overflow: 'hidden',
                    textOverflow: 'ellipsis',
                    whiteSpace: 'normal',
-                   wordBreak: 'break-word',
+                   wordBreak: 'break-all',
            }}>
+              <span style={{
+                        fontSize: "22px",
+                        fontWeight: "bold"
+                      }}>
+                      {title}
+              </span>
               {data.map((text) => (
-                  <span>
+                  <span style={{
+                            fontSize: "18px",
+                            marginLeft: "4px"
+                        }}>
                     {text}
                   </span>
               ))}
