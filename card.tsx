@@ -229,7 +229,7 @@ export default function Card({
                overflow: 'hidden',
                textOverflow: 'ellipsis',
                whiteSpace: 'normal',
-               wordBreak: 'break-all',
+               wordBreak: 'break-word',
            }}>
           {biography}
         </span>
