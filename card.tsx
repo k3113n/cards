@@ -429,8 +429,6 @@ function Move({
                flexDirection: "column",
                justifyContent: "center",
                alignItems: "flex-start",
-               maxHeight: "50%",
-               overflow: "hidden"
            }}>
           <span style={{
               fontSize: "22px",
