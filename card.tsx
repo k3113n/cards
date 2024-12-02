@@ -74,13 +74,13 @@ export default function Card({
        justifyContent: "center",
        alignItems: "center",
        position: "relative",
-       fontFamily: "'NotoSans', 'NotoSansArabic', 'NotoSansSC', 'NotoSansTC', 'NotoSansJP', 'NotoSansKR', 'NotoSansHebrew', 'NotoSansThai', 'NotoSansDevanagari', sans-serif",
+       fontFamily: "'NotoSans', sans-serif",
       }}>
-      <Gradient color={bgColor} />
+        <Gradient color={brightenColor(bgColor)} />
       <p style={{
            position: "absolute",
            left: "45px",
-           top: "3px",
+           top: "-2px",
            fontSize: "20px",
            textAlign: "left",
        }}>
@@ -89,7 +89,7 @@ export default function Card({
       <p style={{
          position: "absolute",
          left: "45px",
-         top: "25px",
+         top: "-2px",
          fontSize: "40px",
          textAlign: "left",
        }}>
@@ -231,7 +231,7 @@ export default function Card({
           width: "100%",
           height: "14px",
           position: "absolute",
-          bottom: "8px",
+          bottom: "3px",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
@@ -240,13 +240,14 @@ export default function Card({
           fontSize: "14px",
         }}>
           <p style={{
+                 position: "absolute",
                  margin: "auto"
              }}>
             {attribution}
             <img style={{
+                     position: "absolute",
                      height: "14px",
                      width: "14px",
-                     marginTop: "1px",
                      marginLeft: "5px",
                      marginRight: "5px"
                  }} src={logoURL} alt={logoAlt} />
@@ -262,9 +263,7 @@ export default function Card({
             height={"14px"}
             viewBox={"0 0 32 32"}
             style={{
-                marginTop: "1px",
                 marginLeft: "5px",
-                marginRight: "5px",
             }}>
             <path
                mask="url(#lineMask)"
@@ -314,7 +313,7 @@ function Gradient({color}: {color: string}){
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 750 1050`}
+      viewBox={`0 0 680 980`}
       width={"100%"}
       height={"100%"}
       position={"absolute"}
@@ -436,11 +435,21 @@ function Move({
             }}>
             {title}
           </span>
-          {data.map((text, index) => (
-              <span>
-                {text}
-              </span>
-          ))}
+          <div style={{
+                   display: '-webkit-box',
+                   WebkitBoxOrient: 'vertical',
+                   WebkitLineClamp: 5,
+                   overflow: 'hidden',
+                   textOverflow: 'ellipsis',
+                   whiteSpace: 'normal',
+                   wordBreak: 'break-word',
+           }}>
+              {data.map((text) => (
+                  <span>
+                    {text}
+                  </span>
+              ))}
+          </div>
         </div>
       </div>
       <div style={{
@@ -475,7 +484,7 @@ function Jewel({
         width: `${size}px`,
         fontSize: `${size-8}px`,
         borderRadius: "50%",
-        background: `radial-gradient(circle at 40% 40%, white, ${color} 60%, ${color} 100%)`,
+        background: `radial-gradient(circle at 40% 40%, white, ${brightenColor(color, "black", 2)} 60%, ${brightenColor(color, "black", 2)} 100%)`,
         boxShadow: `
           inset 0 0 10px rgba(255, 255, 255, 0.5),
           0 4px 10px rgba(0, 0, 0, 0.3)`,
@@ -490,3 +499,44 @@ function Jewel({
     </div>
   );
 }
+
+function brightenColor(color, text = "black", minContrast = 4.5) {
+    function hexToRgb(hex) {
+      hex = hex.replace("#", "");
+      const bigint = parseInt(hex, 16);
+      return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+    }
+
+    function rgbToHex(r, g, b) {
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    function relativeLuminance([r, g, b]: number[]) {
+      const srgb = [r, g, b].map((v) => {
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+    }
+
+    function contrastRatio(l1, l2) {
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+
+    const textRgb = text === "black" ? [0, 0, 0] : [255, 255, 255];
+    const textLum = relativeLuminance(textRgb);
+
+    let [r, g, b] = hexToRgb(color);
+    let bgLum = relativeLuminance([r, g, b]);
+
+    while (contrastRatio(bgLum, textLum) < minContrast) {
+      r = Math.min(r + 10, 255);
+      g = Math.min(g + 10, 255);
+      b = Math.min(b + 10, 255);
+      bgLum = relativeLuminance([r, g, b]);
+
+      if (r === 255 && g === 255 && b === 255) break;
+    }
+
+    return rgbToHex(r, g, b);
+  }

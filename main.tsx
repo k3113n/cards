@@ -1,10 +1,8 @@
 import { serve } from "server";
 import React from "react";
+import ReactDOMServer from "reactdom";
+import puppeteer from "puppeteer";
 import { SignJWT, jwtVerify } from "jose";
-import satori, { init } from "satori";
-import initYoga from "yoga";
-import { Resvg } from "resvg";
-import cacheDir from "cache";
 import Card from "./card.tsx";
 
 const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET"));
@@ -17,12 +15,6 @@ console.log(await new SignJWT({ iss: issuer })
   .setExpirationTime("1h")
   .sign(secret));
 
-const wasm = await Deno.readFile(
-  `${cacheDir()}/deno/npm/registry.npmjs.org/yoga-wasm-web/0.2.0/dist/yoga.wasm`,
-);
-const yoga = await (initYoga as unknown as (wasm: Uint8Array) => Promise<unknown>)(wasm);
-init(yoga);
-
 serve(async (req) => {
   const authHeader = req.headers.get("Authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -33,6 +25,8 @@ serve(async (req) => {
     const { payload } = await jwtVerify(token, secret);
     if (req.method === "POST") {
       try {
+        const browser = await puppeteer.launch({ pipe: false, headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"],});
+        const page = await browser.newPage();
         const json = await req.json();
         const title = json.title;
         const subtitle = json.subtitle;
@@ -63,7 +57,7 @@ serve(async (req) => {
         const logoAlt = json.logo[1];
         const cardNumber = json.count;
         const cardCount = json.total;
-        const svg = await satori(
+        const card = ReactDOMServer.renderToStaticMarkup(
           <Card
             title={title}
             subtitle={subtitle}
@@ -94,72 +88,26 @@ serve(async (req) => {
             logoAlt={logoAlt}
             cardNumber={cardNumber}
             cardCount={cardCount}
-          />, {
-            width: 750,
-            height: 1050,
-            fonts: [
-              {
-                name: "NotoSans",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansArabic",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansSC",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansCJKSC.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansTC",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansCJKTC.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansJP",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansCJKJP.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansKR",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansCJKKR.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansDevanagari",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansThai",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-              {
-                name: "NotoSansHebrew",
-                data: await Deno.readFile("/usr/share/fonts/truetype/noto/NotoSansHebrew-Regular.ttf"),
-                weight: 400,
-                style: "normal",
-              },
-            ]
-          });
-
-        const resvg = new Resvg(svg, {
-          background: "rgba(0, 0, 0, 0)",
-        });
-        const pngData = resvg.render();
-        const pngBuffer = pngData.asPng();
+          />
+          );
+        const htmlContent = `
+            <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:wght@400;700&display=swap&subset=latin,cyrillic,greek,devanagari,hiragana,katakana,hangul,arabic,hebrew">
+                <style>
+                  body {height:1050px;width:750px;margin:0}
+                </style>
+              </head>
+              <body>${card}</body>
+            </html>
+        `
+        await page.setViewport({ width: 750, height: 1050 });
+        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+        const pngBuffer = await page.screenshot({ type: "png" });
+        await browser.close();
 
         return new Response(pngBuffer, {
           headers: {
