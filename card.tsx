@@ -252,7 +252,6 @@ export default function Card({
              }}>
             {attribution}
             <img style={{
-                     position: "absolute",
                      height: "14px",
                      width: "14px",
                      marginLeft: "5px",
