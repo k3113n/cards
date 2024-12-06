@@ -8,14 +8,7 @@ import Card from "./card.tsx";
 
 const env = await load();
 const secret = new TextEncoder().encode(Deno.env.get("JWT_SECRET") || env["JWT_SECRET"]);
-const issuer = Deno.env.get("JWT_ISSUER") || env["JWT_ISSUER"];
-const alg = Deno.env.get("JWT_ALG") || env["JWT_ALG"];
 const port = Deno.env.get("PORT") || env["PORT"];
-
-console.log(await new SignJWT({ iss: issuer })
-  .setProtectedHeader({ alg: alg })
-  .setExpirationTime("1h")
-  .sign(secret));
 
 serve(async (req) => {
   const authHeader = req.headers.get("Authorization");
