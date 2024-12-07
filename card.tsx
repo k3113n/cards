@@ -497,10 +497,14 @@ function Jewel({
         boxShadow: `
           inset 0 0 10px rgba(255, 255, 255, 0.5),
           0 4px 10px rgba(0, 0, 0, 0.3)`,
-        alignText: "center"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-        {character[0]}
+        <span>
+            {character[0]}
+        </span>
     </div>
   );
 }
