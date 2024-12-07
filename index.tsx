@@ -1,11 +1,9 @@
 import { jwtVerify } from "jose";
 import { chromium } from 'playwright';
-import dotenv from 'dotenv';
 import { renderToStaticMarkup} from 'react-dom/server';
 import React from 'react';
 import Card from "./card.tsx";
 
-dotenv.config();
 const secret = new TextEncoder().encode(process.env.JWT_SECRET || "I solemnly swear I'm up to no good.");
 const port: number = parseInt(process.env.PORT || "3000", 10);
 
