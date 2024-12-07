@@ -502,7 +502,10 @@ function Jewel({
         alignItems: "center",
       }}
     >
-        <span>
+        <span style={{
+                  width: "100%",
+                  alignText: "center"
+              }}>
             {character[0]}
         </span>
     </div>
