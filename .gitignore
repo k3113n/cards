@@ -1,30 +1,40 @@
-# Compiled output
-*.js
-*.mjs
-*.tsbuildinfo
+# Node/Bun modules
+node_modules/
+.bun/
 
-# Dependency cache directory
-deno_dir/
-
-# Logs
-*.log
-
-# Environment files
+# Environment variables
 .env
 .env.local
 .env.*.local
 
-# Temporary files
-*.tmp
-*.swp
-deno.lock
+# Logs
+logs/
+*.log
+npm-debug.log*
+bun-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# IDE/Editor files
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Bun lockfile
+bun.lockb
+
+# Editor-specific settings
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
 
-# OS-specific files
-.DS_Store
-Thumbs.db
+# Temporary files
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+out/

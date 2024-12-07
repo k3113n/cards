@@ -299,7 +299,7 @@ function Gradient({color}: {color: string}){
   const placedGradients: Array<{ x: number; y: number; radius: number }> = [];
 
   for (let i = 0; i < gradientCount; i++) {
-    let x, y;
+    let x=0, y=0;
     let validPosition = false;
     while (!validPosition) {
       x = random(0, 750);
@@ -322,7 +322,6 @@ function Gradient({color}: {color: string}){
       viewBox={`0 0 680 980`}
       width={"100%"}
       height={"100%"}
-      position={"absolute"}
     >
       <rect width={750} height={1050} fill={color} />
       {placedGradients.map(({ x, y, radius }, index) => (
@@ -371,7 +370,7 @@ function Details({
              fontSize: "18px",
          }}>
       {items.map((item, index) => (
-        <span style={{
+        <span key={index} style={{
                  margin: "5px",
                  overflow: "hidden"
               }}>
@@ -395,7 +394,7 @@ function Move({
   title: string;
   data: string[];
   count: string;
-  split: bool;
+  split: boolean;
 }){
   return (
     <div style={{
@@ -417,7 +416,7 @@ function Move({
              gap: "10px",
            }}>
         {chars.map((char, index) => (
-          <Jewel size={40} character={char} color={colors[index]} />
+          <Jewel key={index} size={40} character={char} color={colors[index]} />
         ))}
       </div>
       <div style={{
@@ -450,8 +449,8 @@ function Move({
                       }}>
                       {title}
               </span>
-              {data.map((text) => (
-                  <span style={{
+              {data.map((text, index) => (
+                  <span key={index} style={{
                             fontSize: "18px",
                             marginLeft: "4px"
                         }}>
@@ -502,10 +501,7 @@ function Jewel({
         alignItems: "center",
       }}
     >
-        <span style={{
-                  width: "100%",
-                  alignText: "center"
-              }}>
+        <span>
             {character[0]}
         </span>
     </div>
