@@ -370,12 +370,17 @@ function Details({
              fontSize: "18px",
          }}>
       {items.map((item, index) => (
-        <div key={index} style={{
+        <span key={index} style={{
                  margin: "5px",
-                 overflow: "hidden"
+                 display: '-webkit-box',
+                 WebkitBoxOrient: 'vertical',
+                 WebkitLineClamp: 1,
+                 overflow: 'hidden',
+                 textOverflow: 'ellipsis',
+                 whiteSpace: 'normal',
               }}>
           {item}
-        </div>
+        </span>
       ))}
     </div>
   );
